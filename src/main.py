@@ -43,7 +43,7 @@ def draw_clef(c, clef):
 		else:
 			clef = "../img/Clefs/TrebleClef.jpg"
 
-		y = 9.95
+		y = 9.90
 		for i in range(0,10):
 			c.drawImage(clef, .5*inch,y*inch,width = None, height = None, mask = None)
 			y = y - 1
@@ -61,7 +61,7 @@ def close(c):
 #creating the canvas to draw on
 c = create_canvas()
 #draw the clef first because the 
-draw_clef(c, "treble")
+draw_clef(c, "bass")
 draw_bars(c)
 
 #closing file gracefully
