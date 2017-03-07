@@ -2,6 +2,7 @@
 # main.py by Grant Weaver
 #
 # This is the main application to the random sheet music generator
+# The page is 8x11.5, the staff has a .5 inch padding
 #
 
 from reportlab.pdfgen import canvas
@@ -15,7 +16,6 @@ def create_canvas():
 	c.setAuthor("Random Sheet Music Generator")
 	c.drawString(3*inch, 11*inch, "Created by Random Sight Reader")
 	return c
-
 
 #draws the staff ONLY
 #measure lines will be drawn seperately based on key sig
@@ -36,7 +36,6 @@ def draw_bars(c):
 			y = y - .15
 		y = y - .25
 
-
 #draws clef to the bars (clef = -1 for bass and 1 for treble)
 def draw_clef(c, clef):
 		if(clef == "bass"):
@@ -49,8 +48,6 @@ def draw_clef(c, clef):
 			c.drawImage(clef, .5*inch,y*inch,width = None, height = None, mask = None)
 			y = y - 1
 
-
-		
 #does the ending operations of "show page"
 #which ends editing of file and saves file
 def close(c):
@@ -63,6 +60,7 @@ def close(c):
 
 #creating the canvas to draw on
 c = create_canvas()
+#draw the clef first because the 
 draw_clef(c, "treble")
 draw_bars(c)
 
