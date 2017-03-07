@@ -8,10 +8,6 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.units import inch
 from PIL import Image
 
-
-
-
-
 #returns the newly created canvas (8x11.5)
 def create_canvas():
 	c = canvas.Canvas("test.pdf")
@@ -39,24 +35,36 @@ def draw_bars(c):
 
 			y = y - .15
 		y = y - .25
+
+
+#draws clef to the bars (clef = -1 for bass and 1 for treble)
+def draw_clef(c, clef):
+		if(clef == "bass"):
+			clef = "../img/Clefs/BassClef.png"
+		else:
+			clef = "../img/Clefs/TrebleClef.jpg"
+
+		y = 9.95
+		for i in range(0,10):
+			c.drawImage(clef, .5*inch,y*inch,width = None, height = None, mask = None)
+			y = y - 1
+
+
 		
+#does the ending operations of "show page"
+#which ends editing of file and saves file
+def close(c):
+	c.showPage()
+	c.save()
 
-
-
+#
+# MAIN STATEMENT
+#
 
 #creating the canvas to draw on
 c = create_canvas()
-
+draw_clef(c, "treble")
 draw_bars(c)
 
-
-
-#draw_bass_cleff(c)
-
-
-
-#ending the page
-c.showPage()
-
-#saving the page
-c.save()
+#closing file gracefully
+close(c)
