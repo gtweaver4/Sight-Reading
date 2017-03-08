@@ -93,29 +93,37 @@ explanation_label = Label(root, text = "You are currently in treble clef in the 
 explanation_label.pack(anchor = W)
 
 #clef stuff
-clef_label = Label(root, text = "Clef Options",pady = 10).pack(anchor = W)
-clef_radiobtn_group = IntVar()
-treble_clef_radiobtn = Radiobutton(root, text = "Treble", variable = clef_radiobtn_group, value = 1).pack(anchor = W)
-bass_clef_radiobtn = Radiobutton(root, text = "Bass", variable = clef_radiobtn_group, value = 2).pack(anchor = W)
+clef_frame = Frame(root)
+clef_label = Label(clef_frame, text = "Clef Options",pady = 10).pack(anchor = W)
+clef_group = IntVar()
+treble_clef_radiobtn = Radiobutton(clef_frame, text = "Treble", variable = clef_group, value = 1).pack(side = LEFT)
+bass_clef_radiobtn = Radiobutton(clef_frame, text = "Bass", variable = clef_group, value = 2).pack(side = LEFT)
 
+clef_frame.pack(anchor = W)
 
-#key signature stuff
-key_signature_label = Label(root, text = "Key Signatures Options",pady = 10).pack(anchor = W)
-key_sigs_radiobtn_group = IntVar()
-twofour_radiobtn = Radiobutton(root, text = "2/4", variable = key_sigs_radiobtn_group, value = 1)
-twofour_radiobtn.pack(anchor = W)
-threefour_radiobtn = Radiobutton(root, text = "3/4", variable = key_sigs_radiobtn_group, value = 2)
-threefour_radiobtn.pack(anchor = W)
-fourfour_radiobtn = Radiobutton(root, text = "4/4", variable = key_sigs_radiobtn_group, value = 3)
-fourfour_radiobtn.pack(anchor = W)
+#time signature stuff
+time_sig_frame = Frame(root)
+Label(root, text = "Time Signatures Options",pady = 10).pack(anchor = W)
+time_sigs_group = IntVar()
+twofour_radiobtn = Radiobutton(time_sig_frame, text = "2/4", variable = time_sigs_group, value = 1)
+twofour_radiobtn.pack(side = LEFT)
+threefour_radiobtn = Radiobutton(time_sig_frame, text = "3/4", variable = time_sigs_group, value = 2)
+threefour_radiobtn.pack(side = LEFT)
+fourfour_radiobtn = Radiobutton(time_sig_frame, text = "4/4", variable = time_sigs_group, value = 3)
+fourfour_radiobtn.pack(side = LEFT)
 
+time_sig_frame.pack(anchor = W)
 
+#key sig stuff
+key_sig_frame = Frame(root)
+Label(root, text = "Key Signature Options").pack(anchor = W)
+key_sig_group = IntVar()
+key_c_radiobtn = Radiobutton(root, text = "Key of C", variable = key_sig_group, value = 1).pack(anchor = W)
 
 
 update_button = Button(root, text = "Update", command = lambda root = root:update()).pack(anchor = W)
 generate_music_button = Button(root,text = "Generate Music", command = lambda root = root:generate()).pack(anchor = W)
 cancel_button = Button(root, text = "Cancel", command = lambda root = root:exit()).pack(anchor = W)
-
 
 
 
