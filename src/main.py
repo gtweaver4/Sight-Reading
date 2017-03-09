@@ -61,8 +61,8 @@ def draw_key_signature(c, clef, key):
 #draws the bass key signatures
 def draw_bass_key_signature(c, key):
 	xpositions = [1.1, 1.2, 1.3,1.4, 1.5, 1.6, 1.7]
-	flatY = [9.97, 10.20, 9.9, 10.13, 9.83, 10.03, 9.76]
-	sharpY = [10.35, 10.01, 10.37, 10.115,9.93, 10.225,10.0]
+	flatY = [9.94, 10.20, 9.9, 10.13, 9.83, 10.03, 9.76]
+	sharpY = [10.22, 10.01, 10.3, 10.07, 9.86, 10.15, 9.93]
 	if(key < 0):
 		for x in range(0, abs(key)):
 			c.drawImage("../img/Flat_Sharp/flat.png", xpositions[x]*inch, flatY[x]*inch,width = None, height = None, mask = None)
