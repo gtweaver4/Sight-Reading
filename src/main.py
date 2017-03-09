@@ -40,7 +40,7 @@ def draw_bars(c):
 
 #draws clef to the bars (clef = -1 for bass and 1 for treble)
 def draw_clef(c, clef):
-		if(clef == "bass"):
+		if(clef == -1):
 			clef = "../img/Clefs/BassClef.png"
 		else:
 			clef = "../img/Clefs/TrebleClef.jpg"
@@ -50,14 +50,27 @@ def draw_clef(c, clef):
 			c.drawImage(clef, .5*inch,y*inch,width = None, height = None, mask = None)
 			y = y - 1
 
+#just an if statement that determines which clef is selected
+#then uses the draw bass or treble keys
+def draw_key_signature(c, clef, key):
+	if(clef == -1):
+		draw_bass_key_signature(c, key)
+	else:
+		draw_treble_key_signature(c, key)
 
-
-
-#BEADGCF
+#draws the bass key signatures
 def draw_bass_key_signature(c, key):
-	#stuff
-	i = 0
+	xpositions = [1.1, 1.2, 1.3,1.4, 1.5, 1.6, 1.7]
+	flatY = [9.97, 10.20, 9.9, 10.13, 9.83, 10.03, 9.76]
+	sharpY = [10.35, 10.01, 10.37, 10.115,9.93, 10.225,10.0]
+	if(key < 0):
+		for x in range(0, abs(key)):
+			c.drawImage("../img/Flat_Sharp/flat.png", xpositions[x]*inch, flatY[x]*inch,width = None, height = None, mask = None)
+	if(key > 0):
+		for x in range (0, key):
+			c.drawImage("../img/Flat_Sharp/sharp.png", xpositions[x]*inch, sharpY[x]*inch,width = None, height = None, mask = None)
 
+#draws the treble key signatures
 def draw_treble_key_signature(c,key):
 	#stuff
 	i = 0
@@ -68,15 +81,24 @@ def close(c):
 	c.showPage()
 	c.save()
 
-
-
 #tk functions
 def exit():
 	sys.exit()
 
-def update():
-	v.get()
+#generates the music and writes to the file all of the music
+def generate():
+	c = create_canvas()
+	clef = clef_group.get()
+	key  = key_sig_group.get()
 
+	#drawing the basics
+	draw_clef(c, clef)
+	draw_key_signature(c, clef, key)
+	draw_bars(c)
+	
+	#closes and writes the pdf and exits tk window
+	close(c)
+	exit()
 
 #
 # MAIN STATEMENT
@@ -94,13 +116,13 @@ clef_frame = Frame(root)
 clef_label = Label(clef_frame, text = "Clef Options",padx = 170,pady = 10).pack(anchor = W)
 clef_group = IntVar()
 treble_clef_radiobtn = Radiobutton(clef_frame, text = "Treble",padx = 60 ,variable = clef_group, value = 1).pack(side = LEFT)
-bass_clef_radiobtn = Radiobutton(clef_frame, text = "Bass", padx = 60, variable = clef_group, value = 2).pack(side = LEFT)
+bass_clef_radiobtn = Radiobutton(clef_frame, text = "Bass", padx = 60, variable = clef_group, value = -1).pack(side = LEFT)
 
 clef_frame.pack(anchor = W)
 
 #time signature stuff
 time_sig_frame = Frame(root)
-Label(root, text = "Time Signatures Options",padx = 170,pady = 10).pack(anchor = W)
+Label(root, text = "Time Signatures Options",padx = 125,pady = 10).pack(anchor = W)
 time_sigs_group = IntVar()
 twofour_radiobtn = Radiobutton(time_sig_frame, text = "2/4",padx = 40 ,variable = time_sigs_group, value = 1)
 twofour_radiobtn.pack(side = LEFT)
@@ -114,7 +136,7 @@ time_sig_frame.pack(anchor = W)
 #key sig stuff I could probably loop this but
 #am having issues with the frames
 # every sharp is +1 every flat is -1 with key of C beting 0
-Label(root, text = "Key Signature Options", padx = 170 ,pady = 10).pack(anchor = W)
+Label(root, text = "Key Signature Options", padx = 125 ,pady = 10).pack(anchor = W)
 key_sig_group = IntVar()
 key_c_radiobtn = Radiobutton(root, text = "Key of C", padx = 170 ,variable = key_sig_group, value = 0).pack(anchor = W)
 
@@ -132,7 +154,6 @@ key_sig_frame3 = Frame(root)
 key_Eb_radiobtn = Radiobutton(key_sig_frame3, text = "Key of Eb", padx = 60 , variable = key_sig_group, value = -3).pack(side = LEFT)
 key_A_radiobtn = Radiobutton(key_sig_frame3, text = "Key of A", padx = 60 , variable = key_sig_group, value = 3).pack(side = LEFT)
 key_sig_frame3.pack(anchor = W)
-
 
 key_sig_frame4 = Frame(root)
 key_Ab_radiobtn = Radiobutton(key_sig_frame4, text = "Key of Ab", padx = 60 , variable = key_sig_group, value = -4).pack(side = LEFT)
@@ -159,33 +180,9 @@ Label(root,text = "\n\n").pack()
 #button stuff
 generate_music_button = Button(root,text = "Generate Music", padx = 170, pady = 10 ,command = lambda root = root:generate()).pack(anchor = W)
 
-
 cancel_button = Button(root, text = "Cancel", padx = 190 , pady = 10 ,command = lambda root = root:exit()).pack(anchor = W)
-
-
-
-
 
 root.mainloop()
 
-
-
-'''
-clef = "treble"
-#creating the canvas to draw on
-c = create_canvas()
-#draw the clef first because the bars go over the clef 
-draw_clef(c, clef)
-
-key = "F"
-
-if(clef == "bass"):
-	draw_bass_key_signature(c, key)
-else:
-	draw_treble_key_signature(c,key)
-
-draw_bars(c)
-
-#closing file gracefully
-close(c)
-'''
+#safe fail of tk window & program
+sys.exit()
