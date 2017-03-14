@@ -10,7 +10,7 @@ from reportlab.lib.units import inch
 from PIL import Image
 from Tkinter import *
 import sys
-import pdfdrawer
+import pdfwriter
 
 
 #tk functions
@@ -23,7 +23,7 @@ def generate():
 	key = key_sig_group.get()
 	time = time_sigs_group.get()
 
-	pdfdrawer.createReading(clef, key, time)
+	pdfwriter.createReading(clef, key, time)
 
 	exit()
 
@@ -43,7 +43,7 @@ clef_frame = Frame(root)
 clef_label = Label(clef_frame, text = "Clef Options",padx = 170,pady = 10).pack(anchor = W)
 clef_group = IntVar()
 treble_clef_radiobtn = Radiobutton(clef_frame, text = "Treble",padx = 60 ,variable = clef_group, value = 1).pack(side = LEFT)
-bass_clef_radiobtn = Radiobutton(clef_frame, text = "Bass", padx = 60, variable = clef_group, value = -1).pack(side = LEFT)
+bass_clef_radiobtn = Radiobutton(clef_frame, text = "Bass", padx = 60, variable = clef_group, value = 0).pack(side = LEFT)
 
 clef_frame.pack(anchor = W)
 
@@ -51,55 +51,55 @@ clef_frame.pack(anchor = W)
 time_sig_frame = Frame(root)
 Label(root, text = "Time Signatures Options",padx = 125,pady = 10).pack(anchor = W)
 time_sigs_group = IntVar()
-twofour_radiobtn = Radiobutton(time_sig_frame, text = "2/4",padx = 40 ,variable = time_sigs_group, value = 1)
+twofour_radiobtn = Radiobutton(time_sig_frame, text = "2/4",padx = 40 ,variable = time_sigs_group, value = 0)
 twofour_radiobtn.pack(side = LEFT)
-threefour_radiobtn = Radiobutton(time_sig_frame, text = "3/4",padx = 40 ,variable = time_sigs_group, value = 2)
+threefour_radiobtn = Radiobutton(time_sig_frame, text = "3/4",padx = 40 ,variable = time_sigs_group, value = 1)
 threefour_radiobtn.pack(side = LEFT)
-fourfour_radiobtn = Radiobutton(time_sig_frame, text = "4/4",padx = 40 ,variable = time_sigs_group, value = 3)
+fourfour_radiobtn = Radiobutton(time_sig_frame, text = "4/4",padx = 40 ,variable = time_sigs_group, value = 2)
 fourfour_radiobtn.pack(side = LEFT)
 
 time_sig_frame.pack(anchor = W)
 
 #key sig stuff I could probably loop this but
 #am having issues with the frames
-# every sharp is +1 every flat is -1 with key of C beting 0
+# C is 0 then flats are 1-7 sharps are 8-14
 Label(root, text = "Key Signature Options", padx = 125 ,pady = 10).pack(anchor = W)
 key_sig_group = IntVar()
 key_c_radiobtn = Radiobutton(root, text = "Key of C", padx = 170 ,variable = key_sig_group, value = 0).pack(anchor = W)
 
 key_sig_frame1 = Frame(root)
-key_f_radiobtn = Radiobutton(key_sig_frame1, text = "Key of F  ", padx = 60 ,variable = key_sig_group, value = -1).pack(side = LEFT)
-key_G_radiobtn = Radiobutton(key_sig_frame1, text = "Key of G",  padx = 60 ,variable = key_sig_group, value =  1).pack(side = LEFT)
+key_f_radiobtn = Radiobutton(key_sig_frame1, text = "Key of F  ", padx = 60 ,variable = key_sig_group, value = 1).pack(side = LEFT)
+key_G_radiobtn = Radiobutton(key_sig_frame1, text = "Key of G",  padx = 60 ,variable = key_sig_group, value =  8).pack(side = LEFT)
 key_sig_frame1.pack(anchor = W)
 
 key_sig_frame2 = Frame(root)
-key_Bb_radiobtn = Radiobutton(key_sig_frame2, text = "Key of Bb", padx = 60 , variable = key_sig_group, value = -2).pack(side = LEFT)
-key_D_radiobtn = Radiobutton(key_sig_frame2, text = "Key of D", padx = 60 , variable = key_sig_group, value = 2).pack(side = LEFT)
+key_Bb_radiobtn = Radiobutton(key_sig_frame2, text = "Key of Bb", padx = 60 , variable = key_sig_group, value = 2).pack(side = LEFT)
+key_D_radiobtn = Radiobutton(key_sig_frame2, text = "Key of D", padx = 60 , variable = key_sig_group, value = 9).pack(side = LEFT)
 key_sig_frame2.pack(anchor = W)
 
 key_sig_frame3 = Frame(root)
-key_Eb_radiobtn = Radiobutton(key_sig_frame3, text = "Key of Eb", padx = 60 , variable = key_sig_group, value = -3).pack(side = LEFT)
-key_A_radiobtn = Radiobutton(key_sig_frame3, text = "Key of A", padx = 60 , variable = key_sig_group, value = 3).pack(side = LEFT)
+key_Eb_radiobtn = Radiobutton(key_sig_frame3, text = "Key of Eb", padx = 60 , variable = key_sig_group, value = 3).pack(side = LEFT)
+key_A_radiobtn = Radiobutton(key_sig_frame3, text = "Key of A", padx = 60 , variable = key_sig_group, value = 10).pack(side = LEFT)
 key_sig_frame3.pack(anchor = W)
 
 key_sig_frame4 = Frame(root)
-key_Ab_radiobtn = Radiobutton(key_sig_frame4, text = "Key of Ab", padx = 60 , variable = key_sig_group, value = -4).pack(side = LEFT)
-key_E_radiobtn = Radiobutton(key_sig_frame4, text = "Key of E", padx = 60 , variable = key_sig_group, value = 4).pack(side = LEFT)
+key_Ab_radiobtn = Radiobutton(key_sig_frame4, text = "Key of Ab", padx = 60 , variable = key_sig_group, value = 4).pack(side = LEFT)
+key_E_radiobtn = Radiobutton(key_sig_frame4, text = "Key of E", padx = 60 , variable = key_sig_group, value = 11).pack(side = LEFT)
 key_sig_frame4.pack(anchor = W)
 
 key_sig_frame5 = Frame(root)
-key_Db_radiobtn = Radiobutton(key_sig_frame5, text = "Key of Db", padx = 60 , variable = key_sig_group, value = -5).pack(side = LEFT)
-key_B_radiobtn = Radiobutton(key_sig_frame5, text = "Key of B", padx = 60 , variable = key_sig_group, value = 5).pack(side = LEFT)
+key_Db_radiobtn = Radiobutton(key_sig_frame5, text = "Key of Db", padx = 60 , variable = key_sig_group, value = 5).pack(side = LEFT)
+key_B_radiobtn = Radiobutton(key_sig_frame5, text = "Key of B", padx = 60 , variable = key_sig_group, value = 12).pack(side = LEFT)
 key_sig_frame5.pack(anchor = W)
 
 key_sig_frame6 = Frame(root)
-key_Gb_radiobtn = Radiobutton(key_sig_frame6, text = "Key of Gb", padx = 60 , variable = key_sig_group, value = -6).pack(side = LEFT)
-key_FS_radiobtn = Radiobutton(key_sig_frame6, text = "Key of F#", padx = 60 , variable = key_sig_group, value = 6).pack(side = LEFT)
+key_Gb_radiobtn = Radiobutton(key_sig_frame6, text = "Key of Gb", padx = 60 , variable = key_sig_group, value = 6).pack(side = LEFT)
+key_FS_radiobtn = Radiobutton(key_sig_frame6, text = "Key of F#", padx = 60 , variable = key_sig_group, value = 13).pack(side = LEFT)
 key_sig_frame6.pack(anchor = W)
 
 key_sig_frame7 = Frame(root)
-key_Cb_radiobtn = Radiobutton(key_sig_frame7, text = "Key of Cb", padx = 60 , variable = key_sig_group, value = -7).pack(side = LEFT)
-key_CS_radiobtn = Radiobutton(key_sig_frame7, text = "Key of C#", padx = 60 , variable = key_sig_group, value = 7).pack(side = LEFT)
+key_Cb_radiobtn = Radiobutton(key_sig_frame7, text = "Key of Cb", padx = 60 , variable = key_sig_group, value = 7).pack(side = LEFT)
+key_CS_radiobtn = Radiobutton(key_sig_frame7, text = "Key of C#", padx = 60 , variable = key_sig_group, value = 14).pack(side = LEFT)
 key_sig_frame7.pack(anchor = W)
 
 Label(root,text = "\n\n").pack()
