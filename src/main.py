@@ -12,7 +12,6 @@ from Tkinter import *
 import sys
 import pdfwriter
 
-
 #tk functions
 def exit():
 	sys.exit()
@@ -30,7 +29,6 @@ def generate():
 #
 # MAIN STATEMENT
 #
-
 
 #Tk window
 root = Tk()
@@ -106,10 +104,9 @@ Label(root,text = "\n\n").pack()
 
 #button stuff
 generate_music_button = Button(root,text = "Generate Music", padx = 170, pady = 10 ,command = lambda root = root:generate()).pack(anchor = W)
-
 cancel_button = Button(root, text = "Cancel", padx = 190 , pady = 10 ,command = lambda root = root:exit()).pack(anchor = W)
-
 root.mainloop()
+#End Tk
 
 #safe fail of tk window & program
 sys.exit()

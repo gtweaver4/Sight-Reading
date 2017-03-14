@@ -15,7 +15,9 @@ def createReading(clef, key, time):
 	c = createPdf()
 	drawClef(c, clefkeytimeList[0])
 	drawKeySignature(c, clefkeytimeList[0], key)
+	drawTimeSignatures(c, clefkeytimeList[2])
 	drawBars(c)
+	drawMeasures(c)
 	close(c)
 
 #creates a canvas 8x11.5 and returns it as c
@@ -43,6 +45,25 @@ def drawBars(c):
 				c.line(7.5*inch, temp*inch, 7.5*inch, y*inch)
 			y = y - .15
 		y = y - .25
+
+#draws measure bars
+def drawMeasures(c):
+	l = 0
+	y = 10.5
+	for i in range (0,10):	
+		z = .0001
+		if(i == 0):
+			l = 2.25
+			increment = 1.75
+		else:
+			l = 1
+			increment = 1.625
+		while(l < 8):
+			for x in range(0,5):
+				c.line((z + l)*inch, y*inch, (z + l)*inch, (y-.6)*inch)
+				z = z + .0001
+			l = l + increment
+		y = y - 1
 
 #draws clef to the bars (clef = -1 for bass and 1 for treble)
 def drawClef(c, clef):
@@ -89,6 +110,15 @@ def drawTrebleKeySignature(c,key):
 		for x in range (0, key - 7):
 			c.drawImage("../img/Flat_Sharp/sharp.png", xpositions[x]*inch, sharpY[x]*inch,width = None, height = None, mask = None)
 
+#determines the time signature and draws the 
+#appropriate image depending on time sig
+def drawTimeSignatures(c, time):
+	if(time == "2/4"):
+		c.drawImage("../img/TimeSignatures/24.png", 1.9*inch, 9.9*inch)
+	elif(time == "3/4"):
+		c.drawImage("../img/TimeSignatures/34.png", 1.9*inch, 9.9*inch)
+	else:
+		c.drawImage("../img/TimeSignatures/44.png", 1.9*inch, 9.9*inch)
 
 
 #safely closes the pdfwriter
