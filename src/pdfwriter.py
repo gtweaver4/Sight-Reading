@@ -6,6 +6,7 @@
 
 from reportlab.pdfgen import canvas
 from reportlab.lib.units import inch
+import note
 
 #creates the entire sightreading
 #takes integer values of clef key and time
@@ -16,6 +17,7 @@ def createReading(clef, key, time):
 	drawClef(c, clefkeytimeList[0])
 	drawKeySignature(c, clefkeytimeList[0], key)
 	drawTimeSignatures(c, clefkeytimeList[2])
+	testNotes(c)
 	drawBars(c)
 	drawMeasures(c)
 	close(c)
@@ -134,3 +136,8 @@ def determineValues(clef, key, time):
 	keys_array = ["C", "F", "Bb", "Eb", "Ab", "Db", "Gb", "Cb", "G","D","A", "E", "B", "F#", "C#"]
 	time_array = ["2/4", "3/4", "4/4"]
 	return [clefs_array[clef], keys_array[key], time_array[time]]
+
+
+def testNotes(c):
+	n = note.Note("F", 4, False, "bass", 1, 4, 10)
+	c.drawImage("../img/NoteType/quarterNote.png", n.x, n.y)
