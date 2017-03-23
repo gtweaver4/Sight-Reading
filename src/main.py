@@ -18,6 +18,12 @@ def exit():
 
 #generates the music and writes to the file all of the music
 def generate():
+	#setting default values to treble, key of c, 4/4
+	clef = 1
+	key = 0
+	time = 2
+
+	#gettings input values
 	clef = clef_group.get()
 	key = key_sig_group.get()
 	time = time_sigs_group.get()

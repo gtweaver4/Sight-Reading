@@ -8,14 +8,8 @@
 from reportlab.lib.units import inch
 
 class Note:
-
-	#these two arrays will be the position of the notes
-	letterBassArray = ["F","G","A","B","C","D","E"]
-	letterTrebleArray = ["D","E","F","A","B","C"]
-	bassclefArray = [0,0,0,0,0,0,0,0,0,0,00,0,0,0,0,0,0,0,0,0,00]
-	trebleclefArray = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
-
-	#pitch is the note itself (can also be rest)
+	#pitch is the note itself (can also be rest) without flats or sharps these are
+	#determines by the key signature
 	#duration is what determines the image drawn
 	#is rest will take the mix duration and is rest to determine image
 	#clef is defined by treble or bass which will determine the y draw value
@@ -38,27 +32,20 @@ class Note:
 		#these two arrays will be the position of the notes
 		letterBassArray = ["F","G","A","B","C","D","E"]
 		letterTrebleArray = ["D","E","F","A","B","C"]
-		bassclefArray = [0,0,0,0,0,0,0,-.7,0,0,00,0,0,0,0,0,0,0,0,0,00]
-		trebleclefArray = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
-
-
+		positionArray = [-.72,-.65,-.58,-.51,-.44,-.37,-.3,-.23,-.16,-.09,-.01,.06,.14,.21,.28,.36,.43,.5,.56,.63,.7]
+		barInches = [10, 8.5, 7, 5.5, 4, 2.5, 1]
 		xVal = 0
 		if(clef == "bass"):
 			for x in range(0, len(letterBassArray)):
 				if(letterBassArray[x] == pitch):
-					xVal = x + (octave * 6)
-					return (bassclefArray[xVal] + bar) * inch
-		if(clef == "treble"):
+					xVal = x + (octave * 7)
+					return (positionArray[xVal] + barInches[bar]) * inch
+		elif(clef == "treble"):
 			for x in range(0, len(letterTrebleArray)):
 				if(letterTrebleArray[x] == pitch):
-					xVal = x + (octave * 6)
-					return (trebleclefArray[xVal] + bar) * inch
-		return 0;
+					xVal = x + (octave * 7)
+					return (positionArray[xVal] + barInches[bar]) * inch
+		else: #returns 0 for notes
+			return 0
 
-	#not sure if this will be used but figured i would include it
-	def dropOctave():
-		self.octave = self.ocatave - 1
-
-	def raiseOctave():
-		self.octave = self.octave + 1
-
+		return 0

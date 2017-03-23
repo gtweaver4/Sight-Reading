@@ -37,7 +37,7 @@ def drawBars(c):
 	x = .5
 	for i in range(0,10):
 		#using temp so there aren't as many draw line functions
-		temp = y 
+		temp = y
 		for j in range(0,5):
 			c.line(.5*inch,y*inch, 7.5*inch, y*inch)
 
@@ -46,7 +46,7 @@ def drawBars(c):
 				c.line(.5*inch, temp*inch, .5*inch, y*inch)
 				c.line(7.5*inch, temp*inch, 7.5*inch, y*inch)
 			y = y - .15
-		y = y - .25
+		y = y - .75
 
 #draws measure bars
 def drawMeasures(c):
@@ -65,7 +65,7 @@ def drawMeasures(c):
 				c.line((z + l)*inch, y*inch, (z + l)*inch, (y-.6)*inch)
 				z = z + .0001
 			l = l + increment
-		y = y - 1
+		y = y - 1.5
 
 #draws clef to the bars (clef = -1 for bass and 1 for treble)
 def drawClef(c, clef):
@@ -77,7 +77,7 @@ def drawClef(c, clef):
 		y = 9.95
 		for i in range(0,10):
 			c.drawImage(clef, .5*inch,y*inch,width = None, height = None, mask = None)
-			y = y - 1
+			y = y - 1.5
 
 #just an if statement that determines which clef is selected
 #then uses the draw bass or treble keys
@@ -123,7 +123,7 @@ def drawTimeSignatures(c, time):
 		c.drawImage("../img/TimeSignatures/44.png", 1.9*inch, 9.9*inch)
 
 
-#safely closes the pdfwriter
+#safely closes the pdfwriter and saves the pdf
 def close(c):
 	c.showPage()
 	c.save()
@@ -137,7 +137,45 @@ def determineValues(clef, key, time):
 	time_array = ["2/4", "3/4", "4/4"]
 	return [clefs_array[clef], keys_array[key], time_array[time]]
 
+############
+#DRAW NOTES
+#draws notes at (x,y) which is built into the note class
+def drawQuarterNote(c,x,y):
+	c.drawImage("../img/NoteType/quarterNote.png", x, y)
+
+def drawHalfNote(c,x,y):
+	c.drawImage("../img/NoteType/halfNote.png", x, y)
+
+def drawWholeNote(c,x,y):
+	c.drawImage("../img/NoteType/wholeNote.png",x,y)
+
+def drawSingleEigthNote(c,x,y):
+	c.drawImage("../img/NoteType/singleEigth.png")
+
+def drawSingleSixteenthNote(c,x,y):
+	c.drawImage("../img/NoteType/singleSixteenth.png",x,y)
+
+##########
+#DRAW RESTS
+#draws the rests at (x,y) which is built into the Note class
+def drawQuarterRest(c,x,y):
+	c.drawImage("../img/NoteType/quarterRest.png", x, y)
+
+def drawWholeRest(c,x,y):
+	c.drawImage("../img/NoteType/whole_halfRest.png",x, y + 20)
+
+def drawHalfRest(c,x,y):
+	c.drawImage("../img/NoteType/whole_halfRest.png",x, y - 20)
+
+def drawEigthRest(c,x,y):
+	c.drawImage("../img/NoteType/singleEigth.png", x, y)
+
+def drawSingleSixteenthRest(c,x,y):
+	c.drawImage("../img/NoteType/singleSixteenth.png", x, y)
 
 def testNotes(c):
-	n = note.Note("F", 4, False, "bass", 1, 4, 10)
-	c.drawImage("../img/NoteType/quarterNote.png", n.x, n.y)
+	noteTestList = []
+	for x in range(0,7):
+		noteTestList.append(note.Note("D",4,False,"treble",1,4,x))
+	for notetest in noteTestList:
+		drawQuarterNote(c,notetest.x,notetest.y)
