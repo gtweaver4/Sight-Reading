@@ -140,38 +140,38 @@ def determineValues(clef, key, time):
 ############
 #DRAW NOTES
 #draws notes at (x,y) which is built into the note class
-def drawQuarterNote(c,x,y):
-	c.drawImage("../img/NoteType/quarterNote.png", x, y)
+def drawQuarterNote(c,note):
+	c.drawImage("../img/NoteType/quarterNote.png", note.x, note.y)
 
-def drawHalfNote(c,x,y):
-	c.drawImage("../img/NoteType/halfNote.png", x, y)
+def drawHalfNote(c,note):
+	c.drawImage("../img/NoteType/halfNote.png", note.x,note.y)
 
-def drawWholeNote(c,x,y):
-	c.drawImage("../img/NoteType/wholeNote.png",x,y)
+def drawWholeNote(c,note):
+	c.drawImage("../img/NoteType/wholeNote.png",note.x,note.y)
 
-def drawSingleEigthNote(c,x,y):
-	c.drawImage("../img/NoteType/singleEigth.png")
+def drawSingleEigthNote(c,note):
+	c.drawImage("../img/NoteType/singleEigth.png", note.x,note.y)
 
-def drawSingleSixteenthNote(c,x,y):
-	c.drawImage("../img/NoteType/singleSixteenth.png",x,y)
+def drawSingleSixteenthNote(c,note):
+	c.drawImage("../img/NoteType/singleSixteenth.png",note.x,note.y)
 
 ##########
 #DRAW RESTS
 #draws the rests at (x,y) which is built into the Note class
-def drawQuarterRest(c,x,y):
-	c.drawImage("../img/NoteType/quarterRest.png", x, y)
+def drawQuarterRest(c,note):
+	c.drawImage("../img/NoteType/quarterRest.png",note.x,note.y)
 
-def drawWholeRest(c,x,y):
-	c.drawImage("../img/NoteType/whole_halfRest.png",x, y + 20)
+def drawWholeRest(c,note):
+	c.drawImage("../img/NoteType/whole_halfRest.png",note.x,note.y + 20)
 
-def drawHalfRest(c,x,y):
-	c.drawImage("../img/NoteType/whole_halfRest.png",x, y - 20)
+def drawHalfRest(c,note):
+	c.drawImage("../img/NoteType/whole_halfRest.png",note.x,note.y - 20)
 
-def drawEigthRest(c,x,y):
-	c.drawImage("../img/NoteType/singleEigth.png", x, y)
+def drawEigthRest(c,note):
+	c.drawImage("../img/NoteType/singleEigth.png",note.x,note.y)
 
-def drawSingleSixteenthRest(c,x,y):
-	c.drawImage("../img/NoteType/singleSixteenth.png", x, y)
+def drawSingleSixteenthRest(c,note):
+	c.drawImage("../img/NoteType/singleSixteenth.png",note.x,note.y)
 
 def testNotes(c):
 	noteTestList = []
