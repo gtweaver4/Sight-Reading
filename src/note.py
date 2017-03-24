@@ -23,29 +23,34 @@ class Note:
 		self.clef = clef
 		self.octave = octave
 		self.x = x * inch
-		self.bar = bar + .5 #this is to get the top of the bar
-		self.y = self.getArrayPosition(pitch, bar, clef, octave)
+		self.bar = bar
+		self.barInches = self.getBarInches(bar)
+		self.y = self.getArrayPosition(pitch, self.barInches, clef, octave)
 
 	#retturns the position on the letter array (used to determine y values)
 	@staticmethod
-	def getArrayPosition(pitch, bar, clef, octave):
+	def getArrayPosition(pitch, barInches, clef, octave):
 		#these two arrays will be the position of the notes
 		letterBassArray = ["F","G","A","B","C","D","E"]
-		letterTrebleArray = ["D","E","F","A","B","C"]
-		positionArray = [-.72,-.65,-.58,-.51,-.44,-.37,-.3,-.23,-.16,-.09,-.01,.06,.14,.21,.28,.36,.43,.5,.56,.63,.7]
-		barInches = [10, 8.5, 7, 5.5, 4, 2.5, 1]
+		letterTrebleArray = ["D","E","F","G","A","B","C"]
+		positionArray = [-.76,-.69,-.6,-.51,-.46,-.37,-.3,-.23,-.16,-.09,-.01,.06,.14,.21,.28,.36,.43,.5,.60,.67,.75]
 		xVal = 0
 		if(clef == "bass"):
 			for x in range(0, len(letterBassArray)):
 				if(letterBassArray[x] == pitch):
 					xVal = x + (octave * 7)
-					return (positionArray[xVal] + barInches[bar]) * inch
+					return ((positionArray[xVal] * inch)+ barInches)
 		elif(clef == "treble"):
 			for x in range(0, len(letterTrebleArray)):
 				if(letterTrebleArray[x] == pitch):
 					xVal = x + (octave * 7)
-					return (positionArray[xVal] + barInches[bar]) * inch
+					return ((positionArray[xVal] * inch)+ barInches)
 		else: #returns 0 for notes
 			return 0
 
 		return 0
+
+	@staticmethod
+	def getBarInches(bar):
+		barInches = [10, 8.5, 7, 5.5, 4, 2.5, 1]
+		return barInches[bar] * inch
