@@ -8,21 +8,34 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.units import inch
 import note
 
+#determines the start position for clef and staff
+def determineStart(key):
+	startingPositions = [1.1,1.2,1.3,1.4,1.5,1.6,1.7]
+	if(key == 0):
+		start = 1.8
+	elif(key < 8):
+		start = startingPositions[7-key]
+	else:
+		start = startingPositions[7 - (key - 7)]
+	return start
+
 #creates the entire sightreading
 #takes integer values of clef key and time
 #to determine which value gets passed
 def createReading(clef, key, time):
+
+	start = determineStart(key)
 	clefkeytimeList = determineValues(clef,key,time)
 	c = createPdf()
-	drawClef(c, clefkeytimeList[0])
+	drawClef(c, clefkeytimeList[0],start)
 	drawKeySignature(c, clefkeytimeList[0], key)
 	drawTimeSignatures(c, clefkeytimeList[2])
 	testNotes(c)
-	drawBars(c)
+	drawBars(c,start)
 	drawMeasures(c)
 	close(c)
 
-#creates a canvas 8x11.5 and returns it as c
+#returns a canvas
 def createPdf():
 	c = canvas.Canvas("randomSightReading.pdf")
 	c.setTitle("Random Sight Reading")
@@ -30,9 +43,8 @@ def createPdf():
 	c.drawString(3*inch, 11*inch, "Created by Random Sight Reader")
 	return c
 
-#draws the staff ONLY
-#measure lines will be drawn seperately based on key sig
-def drawBars(c):
+#draws the staff Only
+def drawBars(c,start):
 	y = 10.5
 	x = .5
 	for i in range(0,10):
@@ -40,14 +52,14 @@ def drawBars(c):
 		temp = y
 		for j in range(0,5):
 			if(i == 0):
-				c.line(1.10*inch,y*inch, 7.5*inch, y*inch)
+				c.line(start*inch,y*inch, 7.5*inch, y*inch)
 			else:	
 				c.line(.5*inch,y*inch, 7.5*inch, y*inch)
 
 			#draw side bars
 			if(j == 4):
 				if(i == 0):
-					c.line(1.10*inch, temp*inch, 1.10*inch, y*inch)
+					c.line(start*inch, temp*inch, start*inch, y*inch)
 					c.line(7.5*inch, temp*inch, 7.5*inch, y*inch)
 				else:
 					c.line(.5*inch, temp*inch, .5*inch, y*inch)
@@ -74,8 +86,8 @@ def drawMeasures(c):
 			l = l + increment
 		y = y - 1.5
 
-#draws clef to the bars (clef = -1 for bass and 1 for treble)
-def drawClef(c, clef):
+#draws clef to the bars (clef = 0 for bass and 1 for treble)
+def drawClef(c, clef, start):
 		if(clef == "bass"):
 			clef = "../img/Clefs/BassClef.png"
 		elif(clef == "treble"):
@@ -84,7 +96,7 @@ def drawClef(c, clef):
 		y = 9.95
 		for i in range(0,10):
 			if(i == 0):
-				c.drawImage(clef,1.10*inch,y*inch,width = None, height = None, mask = None)
+				c.drawImage(clef,start*inch,y*inch,width = None, height = None, mask = None)
 			else:
 				c.drawImage(clef, .5*inch,y*inch,width = None, height = None, mask = None)
 			y = y - 1.5
@@ -103,11 +115,11 @@ def drawBassKeySignature(c, key):
 	flatY = [9.94, 10.20, 9.9, 10.13, 9.83, 10.03, 9.76]
 	sharpY = [10.22, 10.01, 10.3, 10.07, 9.86, 10.15, 9.93]
 	if(key < 8):
-		for x in range(0, key):
-			c.drawImage("../img/Flat_Sharp/flat.png", xpositions[x]*inch, flatY[x]*inch,width = None, height = None, mask = None)
+		for x in range(0, key):	# 7 - key + x will position the flats/sharps closest to the time sig
+			c.drawImage("../img/Flat_Sharp/flat.png", xpositions[7-key + x]*inch, flatY[x]*inch,width = None, height = None, mask = None)
 	if(key > 7):
-		for x in range (0, key - 7):
-			c.drawImage("../img/Flat_Sharp/sharp.png", xpositions[x]*inch, sharpY[x]*inch,width = None, height = None, mask = None)
+		for x in range (0, key-7):
+			c.drawImage("../img/Flat_Sharp/sharp.png", xpositions[7-key+x]*inch, sharpY[x]*inch,width = None, height = None, mask = None)
 
 #draws the treble key signatures
 def drawTrebleKeySignature(c,key):
@@ -116,11 +128,11 @@ def drawTrebleKeySignature(c,key):
 	sharpY = [10.37, 10.15, 10.45, 10.22, 10.01, 10.3, 10.07]
 
 	if(key < 8):
-		for x in range(0, key):
-			c.drawImage("../img/Flat_Sharp/flat.png", xpositions[x]*inch, flatY[x]*inch,width = None, height = None, mask = None)
+		for x in range(0, key):# 7 - key + x will position the flats/sharps closest to the time sig
+			c.drawImage("../img/Flat_Sharp/flat.png", xpositions[7-key + x]*inch, flatY[x]*inch,width = None, height = None, mask = None)
 	if(key > 7):
 		for x in range (0, key - 7):
-			c.drawImage("../img/Flat_Sharp/sharp.png", xpositions[x]*inch, sharpY[x]*inch,width = None, height = None, mask = None)
+			c.drawImage("../img/Flat_Sharp/sharp.png", xpositions[7-key + x]*inch, sharpY[x]*inch,width = None, height = None, mask = None)
 
 #determines the time signature and draws the 
 #appropriate image depending on time sig
