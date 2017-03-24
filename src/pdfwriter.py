@@ -214,20 +214,32 @@ def drawQuarterNote(c,note):
 		drawNoteBarsAbove(c,note)
 
 def drawHalfNote(c,note):
-	drawNoteBars(c,note)
 	c.drawImage("../img/NoteType/halfNote.png", note.x,note.y)
+	if(note.octave == 0):
+		drawNoteBarsBelow(c,note)
+	elif(note.octave == 2):
+		drawNoteBarsAbove(c,note)
 
 def drawWholeNote(c,note):
-	drawNoteBars(c,note)
 	c.drawImage("../img/NoteType/wholeNote.png",note.x,note.y)
+	if(note.octave == 0):
+		drawNoteBarsBelow(c,note)
+	elif(note.octave == 2):
+		drawNoteBarsAbove(c,note)
 
 def drawSingleEigthNote(c,note):
-	drawNoteBars(c,note)
 	c.drawImage("../img/NoteType/singleEigth.png", note.x,note.y)
+	if(note.octave == 0):
+		drawNoteBarsBelow(c,note)
+	elif(note.octave == 2):
+		drawNoteBarsAbove(c,note)
 
 def drawSingleSixteenthNote(c,note):
-	drawNoteBars(c,note)
 	c.drawImage("../img/NoteType/singleSixteenth.png",note.x,note.y)
+	if(note.octave == 0):
+		drawNoteBarsBelow(c,note)
+	elif(note.octave == 2):
+		drawNoteBarsAbove(c,note)
 
 ##########
 #DRAW RESTS
