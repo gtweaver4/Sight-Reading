@@ -39,12 +39,19 @@ def drawBars(c):
 		#using temp so there aren't as many draw line functions
 		temp = y
 		for j in range(0,5):
-			c.line(.5*inch,y*inch, 7.5*inch, y*inch)
+			if(i == 0):
+				c.line(1.10*inch,y*inch, 7.5*inch, y*inch)
+			else:	
+				c.line(.5*inch,y*inch, 7.5*inch, y*inch)
 
 			#draw side bars
 			if(j == 4):
-				c.line(.5*inch, temp*inch, .5*inch, y*inch)
-				c.line(7.5*inch, temp*inch, 7.5*inch, y*inch)
+				if(i == 0):
+					c.line(1.10*inch, temp*inch, 1.10*inch, y*inch)
+					c.line(7.5*inch, temp*inch, 7.5*inch, y*inch)
+				else:
+					c.line(.5*inch, temp*inch, .5*inch, y*inch)
+					c.line(7.5*inch, temp*inch, 7.5*inch, y*inch)
 			y = y - .15
 		y = y - .75
 
@@ -55,13 +62,13 @@ def drawMeasures(c):
 	for i in range (0,10):	
 		z = .0001
 		if(i == 0):
-			l = 2.25
-			increment = 1.75
+			l = 2.625
+			increment = 1.625
 		else:
 			l = 1
 			increment = 1.625
 		while(l < 8):
-			for x in range(0,5):
+			for x in range(0,5): #bolden lines
 				c.line((z + l)*inch, y*inch, (z + l)*inch, (y-.6)*inch)
 				z = z + .0001
 			l = l + increment
@@ -76,7 +83,10 @@ def drawClef(c, clef):
 
 		y = 9.95
 		for i in range(0,10):
-			c.drawImage(clef, .5*inch,y*inch,width = None, height = None, mask = None)
+			if(i == 0):
+				c.drawImage(clef,1.10*inch,y*inch,width = None, height = None, mask = None)
+			else:
+				c.drawImage(clef, .5*inch,y*inch,width = None, height = None, mask = None)
 			y = y - 1.5
 
 #just an if statement that determines which clef is selected
@@ -89,7 +99,7 @@ def drawKeySignature(c, clef, key):
 
 #draws the bass key signatures
 def drawBassKeySignature(c, key):
-	xpositions = [1.1, 1.2, 1.3,1.4, 1.5, 1.6, 1.7]
+	xpositions = [1.6,1.7,1.8,1.9,2.0,2.1,2.2]
 	flatY = [9.94, 10.20, 9.9, 10.13, 9.83, 10.03, 9.76]
 	sharpY = [10.22, 10.01, 10.3, 10.07, 9.86, 10.15, 9.93]
 	if(key < 8):
@@ -101,7 +111,7 @@ def drawBassKeySignature(c, key):
 
 #draws the treble key signatures
 def drawTrebleKeySignature(c,key):
-	xpositions = [1.1, 1.2, 1.3,1.4, 1.5, 1.6, 1.7]
+	xpositions = [1.6,1.7,1.8,1.9,2.0,2.1,2.2]
 	flatY = [10.13, 10.36, 10.06, 10.28, 9.98, 10.21, 9.9]
 	sharpY = [10.37, 10.15, 10.45, 10.22, 10.01, 10.3, 10.07]
 
@@ -116,11 +126,11 @@ def drawTrebleKeySignature(c,key):
 #appropriate image depending on time sig
 def drawTimeSignatures(c, time):
 	if(time == "2/4"):
-		c.drawImage("../img/TimeSignatures/24.png", 1.9*inch, 9.9*inch)
+		c.drawImage("../img/TimeSignatures/24.png", 2.35*inch, 9.9*inch)
 	elif(time == "3/4"):
-		c.drawImage("../img/TimeSignatures/34.png", 1.9*inch, 9.9*inch)
+		c.drawImage("../img/TimeSignatures/34.png", 2.35*inch, 9.9*inch)
 	else:
-		c.drawImage("../img/TimeSignatures/44.png", 1.9*inch, 9.9*inch)
+		c.drawImage("../img/TimeSignatures/44.png", 2.35*inch, 9.9*inch)
 
 
 #safely closes the pdfwriter and saves the pdf
