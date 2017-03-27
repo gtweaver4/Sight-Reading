@@ -266,4 +266,4 @@ def testNotes(c):
 	for x in range(0,7):
 		noteTestList.append(note.Note("A",4,False,"bass",1,x))
 	for notetest in noteTestList:
-		drawSingleEigthNote(c,notetest)
+		drawQuarterNote(c,notetest, 3*inch)
