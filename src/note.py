@@ -50,6 +50,7 @@ class Note:
 
 		return 0
 
+	#turns the bar number into the number of inches from the bottom
 	@staticmethod
 	def getBarInches(bar):
 		barInches = [10, 8.5, 7, 5.5, 4, 2.5, 1]

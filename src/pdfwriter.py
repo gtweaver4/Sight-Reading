@@ -23,7 +23,6 @@ def determineStart(key):
 #takes integer values of clef key and time
 #to determine which value gets passed
 def createReading(clef, key, time):
-
 	start = determineStart(key)
 	clefkeytimeList = determineValues(clef,key,time)
 	c = createPdf()
@@ -201,7 +200,6 @@ def drawNoteBarsAbove(c, note):
 		c.line(note.x - (.05 * inch), note.barInches + (.65 * inch),note.x + (.25*inch), note.barInches + (.65 * inch))
 	if(xVal >= 5): #E or Higher
 		c.line(note.x - (.05 * inch), note.barInches + (.8 * inch),note.x + (.25*inch), note.barInches + (.8 * inch))
-
 
 ############
 #DRAW NOTES
