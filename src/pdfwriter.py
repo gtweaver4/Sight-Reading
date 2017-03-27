@@ -204,62 +204,66 @@ def drawNoteBarsAbove(c, note):
 ############
 #DRAW NOTES
 #draws notes at (x,y) which is built into the note class
-def drawQuarterNote(c,note):
-	c.drawImage("../img/NoteType/quarterNote.png", note.x, note.y)
+def drawQuarterNote(c,note, x):
+	c.drawImage("../img/NoteType/quarterNote.png", x, note.y)
 	if(note.octave == 0):
 		drawNoteBarsBelow(c,note)
 	elif(note.octave == 2):
 		drawNoteBarsAbove(c,note)
 
-def drawHalfNote(c,note):
-	c.drawImage("../img/NoteType/halfNote.png", note.x,note.y)
+#FIX THIS DRAW THE NOTE SLIGHTLY LARGER
+def drawHalfNote(c,note,x):
+	c.drawImage("../img/NoteType/halfNote.png", x,note.y)
 	if(note.octave == 0):
 		drawNoteBarsBelow(c,note)
 	elif(note.octave == 2):
 		drawNoteBarsAbove(c,note)
 
-def drawWholeNote(c,note):
-	c.drawImage("../img/NoteType/wholeNote.png",note.x,note.y)
+def drawWholeNote(c,note,x):
+	c.drawImage("../img/NoteType/wholeNote.png",x,note.y)
 	if(note.octave == 0):
 		drawNoteBarsBelow(c,note)
 	elif(note.octave == 2):
 		drawNoteBarsAbove(c,note)
 
-def drawSingleEigthNote(c,note):
-	c.drawImage("../img/NoteType/singleEigth.png", note.x,note.y)
+#THIS IS ALSO DRAWN TOO SMALL
+def drawSingleEigthNote(c,note,x):
+	c.drawImage("../img/NoteType/singleEigth.png", x,note.y)
 	if(note.octave == 0):
 		drawNoteBarsBelow(c,note)
 	elif(note.octave == 2):
 		drawNoteBarsAbove(c,note)
 
-def drawSingleSixteenthNote(c,note):
-	c.drawImage("../img/NoteType/singleSixteenth.png",note.x,note.y)
+#FIX THIS IT IS DRAWN WAY TOO SMALL
+def drawSingleSixteenthNote(c,note,x):
+	c.drawImage("../img/NoteType/singleSixteenth.png",x,note.y)
 	if(note.octave == 0):
 		drawNoteBarsBelow(c,note)
 	elif(note.octave == 2):
 		drawNoteBarsAbove(c,note)
+
 
 ##########
 #DRAW RESTS
 #draws the rests at (x,y) which is built into the Note class
-def drawQuarterRest(c,note):
-	c.drawImage("../img/NoteType/quarterRest.png",note.x,note.y)
+def drawQuarterRest(c,note,x):
+	c.drawImage("../img/NoteType/quarterRest.png",x,note.y)
 
-def drawWholeRest(c,note):
+def drawWholeRest(c,note,x):
 	c.drawImage("../img/NoteType/whole_halfRest.png",note.x,note.y + 20)
 
-def drawHalfRest(c,note):
-	c.drawImage("../img/NoteType/whole_halfRest.png",note.x,note.y - 20)
+def drawHalfRest(c,note,x):
+	c.drawImage("../img/NoteType/whole_halfRest.png",x,note.y - 20)
 
-def drawEigthRest(c,note):
-	c.drawImage("../img/NoteType/singleEigth.png",note.x,note.y)
+def drawEigthRest(c,note,x):
+	c.drawImage("../img/NoteType/singleEigth.png",x,note.y)
 
-def drawSingleSixteenthRest(c,note):
-	c.drawImage("../img/NoteType/singleSixteenth.png",note.x,note.y)
+def drawSingleSixteenthRest(c,note,x):
+	c.drawImage("../img/NoteType/singleSixteenth.png",x,note.y)
 
 def testNotes(c):
 	noteTestList = []
 	for x in range(0,7):
-		noteTestList.append(note.Note("F",4,False,"bass",0,3,x))
+		noteTestList.append(note.Note("A",4,False,"bass",1,x))
 	for notetest in noteTestList:
-		drawQuarterNote(c,notetest)
+		drawSingleEigthNote(c,notetest)

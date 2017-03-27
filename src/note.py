@@ -14,7 +14,6 @@ class Note:
 	#is rest will take the mix duration and is rest to determine image
 	#clef is defined by treble or bass which will determine the y draw value
 	#octaves will range from 0-2 (bass low F 3 lines below to high F 2 lines above staff)
-	#x is the position the note will be placed and y which line the note is on
 	#bar will be which bar line the note is on 10 is top 1 is lowest
 	def __init__(self, pitch, duration, isRest, clef, octave, x, bar):
 		self.pitch = pitch
@@ -22,7 +21,6 @@ class Note:
 		self.isRest = isRest
 		self.clef = clef
 		self.octave = octave
-		self.x = x * inch
 		self.bar = bar
 		self.barInches = self.getBarInches(bar)
 		self.y = self.getArrayPosition(pitch, self.barInches, clef, octave)
