@@ -7,6 +7,7 @@
 from reportlab.pdfgen import canvas
 from reportlab.lib.units import inch
 import note
+import randomizer
 
 #determines the start position for clef and staff
 def determineStart(key):
@@ -29,7 +30,7 @@ def createReading(clef, key, time):
 	drawClef(c, clefkeytimeList[0],start)
 	drawKeySignature(c, clefkeytimeList[0], key)
 	drawTimeSignatures(c, clefkeytimeList[2])
-	testNotes(c)
+	drawMusic(c,randomizer.generateMusic(clefkeytimeList[0],time))
 	drawBars(c,start)
 	drawMeasures(c)
 	close(c)
@@ -159,7 +160,7 @@ def determineValues(clef, key, time):
 	return [clefs_array[clef], keys_array[key], time_array[time]]
 
 #draws the bars if the note is above or below the staff
-def drawNoteBarsBelow(c, note):
+def drawNoteBarsBelow(c, note, x):
 	if(note.clef == "bass"):
 		pitch_list = ["E","D","C","B","A","G","F"]
 	else:
@@ -172,15 +173,15 @@ def drawNoteBarsBelow(c, note):
 			xVal = i
 	
 	if(xVal >= 0): #E or lower (bass)
-		c.line(note.x - (.05 * inch), note.barInches - (.25 * inch),note.x + (.25*inch), note.barInches - (.25 * inch))
+		c.line(x - (.05 * inch), note.barInches - (.25 * inch),x + (.25*inch), note.barInches - (.25 * inch))
 	if(xVal >= 2): #C or lower (bass)
-		c.line(note.x - (.05 * inch), note.barInches - (.40 * inch),note.x + (.25*inch), note.barInches - (.40 * inch))
+		c.line(x - (.05 * inch), note.barInches - (.40 * inch),x + (.25*inch), note.barInches - (.40 * inch))
 	if(xVal >= 4): #A or lower (bass)
-		c.line(note.x - (.05 * inch), note.barInches - (.55 * inch),note.x + (.25*inch), note.barInches - (.55 * inch))
+		c.line(x - (.05 * inch), note.barInches - (.55 * inch),x + (.25*inch), note.barInches - (.55 * inch))
 	if(xVal >= 6): #F or lower (bass)
-		c.line(note.x - (.05 * inch), note.barInches - (.7 * inch),note.x + (.25*inch), note.barInches - (.7 * inch))
+		c.line(x - (.05 * inch), note.barInches - (.7 * inch),x + (.25*inch), note.barInches - (.7 * inch))
 
-def drawNoteBarsAbove(c, note):
+def drawNoteBarsAbove(c, note, x):
 	#TODO fix array search to only include notes above clef?
 	#TODO make the notes inverted above the staff?
 	if(note.clef == "bass"):
@@ -197,9 +198,9 @@ def drawNoteBarsAbove(c, note):
 	if(xVal == 6):
 		return
 	if(xVal >= 3): #C or Higher
-		c.line(note.x - (.05 * inch), note.barInches + (.65 * inch),note.x + (.25*inch), note.barInches + (.65 * inch))
+		c.line(x - (.05 * inch), note.barInches + (.65 * inch),x + (.25*inch), note.barInches + (.65 * inch))
 	if(xVal >= 5): #E or Higher
-		c.line(note.x - (.05 * inch), note.barInches + (.8 * inch),note.x + (.25*inch), note.barInches + (.8 * inch))
+		c.line(x - (.05 * inch), note.barInches + (.8 * inch),x + (.25*inch), note.barInches + (.8 * inch))
 
 ############
 #DRAW NOTES
@@ -207,40 +208,40 @@ def drawNoteBarsAbove(c, note):
 def drawQuarterNote(c,note, x):
 	c.drawImage("../img/NoteType/quarterNote.png", x, note.y)
 	if(note.octave == 0):
-		drawNoteBarsBelow(c,note)
+		drawNoteBarsBelow(c,note,x)
 	elif(note.octave == 2):
-		drawNoteBarsAbove(c,note)
+		drawNoteBarsAbove(c,note,x)
 
 #FIX THIS DRAW THE NOTE SLIGHTLY LARGER
 def drawHalfNote(c,note,x):
 	c.drawImage("../img/NoteType/halfNote.png", x,note.y)
 	if(note.octave == 0):
-		drawNoteBarsBelow(c,note)
+		drawNoteBarsBelow(c,note,x)
 	elif(note.octave == 2):
-		drawNoteBarsAbove(c,note)
+		drawNoteBarsAbove(c,note,x)
 
 def drawWholeNote(c,note,x):
 	c.drawImage("../img/NoteType/wholeNote.png",x,note.y)
 	if(note.octave == 0):
-		drawNoteBarsBelow(c,note)
+		drawNoteBarsBelow(c,note,x)
 	elif(note.octave == 2):
-		drawNoteBarsAbove(c,note)
+		drawNoteBarsAbove(c,note,x)
 
 #THIS IS ALSO DRAWN TOO SMALL
 def drawSingleEigthNote(c,note,x):
 	c.drawImage("../img/NoteType/singleEigth.png", x,note.y)
 	if(note.octave == 0):
-		drawNoteBarsBelow(c,note)
+		drawNoteBarsBelow(c,note,x)
 	elif(note.octave == 2):
-		drawNoteBarsAbove(c,note)
+		drawNoteBarsAbove(c,note,x)
 
 #FIX THIS IT IS DRAWN WAY TOO SMALL
 def drawSingleSixteenthNote(c,note,x):
 	c.drawImage("../img/NoteType/singleSixteenth.png",x,note.y)
 	if(note.octave == 0):
-		drawNoteBarsBelow(c,note)
+		drawNoteBarsBelow(c,note,x)
 	elif(note.octave == 2):
-		drawNoteBarsAbove(c,note)
+		drawNoteBarsAbove(c,note,x)
 
 
 ##########
@@ -261,9 +262,37 @@ def drawEigthRest(c,note,x):
 def drawSingleSixteenthRest(c,note,x):
 	c.drawImage("../img/NoteType/singleSixteenth.png",x,note.y)
 
-def testNotes(c):
-	noteTestList = []
-	for x in range(0,7):
-		noteTestList.append(note.Note("A",4,False,"bass",1,x))
-	for notetest in noteTestList:
-		drawQuarterNote(c,notetest, 3*inch)
+def drawMusic(c, listOfMeasures):
+	xValRange = [1,2.625,4.25,5.875]
+
+	for x in range(0, len(listOfMeasures)):
+		#calculates the positions for the measures
+		if(x == 0):
+			x1 = 2.625
+		elif(x == 1):
+			x1 = 4.25
+		elif(x == 2):
+			x1 = 5.875
+		else:
+			if((x+1) % 4 == 0):
+				x1 = xValRange[0]
+			elif((x+1) % 4 == 1):
+				x1 = xValRange[1]
+			elif((x+1) % 4 == 2):
+				x1 = xValRange[2]
+			else:
+				x1 = xValRange[3]
+
+		padding = 1.625 / (len(listOfMeasures[x]) + 1)
+		x1 = x1 + padding
+
+		for y in range(0, len(listOfMeasures[x])):
+
+			if(listOfMeasures[x][y].duration == 64):
+				drawWholeNote(c,listOfMeasures[x][y], (x1 * inch))
+			elif(listOfMeasures[x][y].duration == 32):
+				drawHalfNote(c,listOfMeasures[x][y] ,(x1 * inch))
+			else:
+				drawQuarterNote(c,listOfMeasures[x][y] ,x1 * inch)
+
+			x1 = x1 + padding
